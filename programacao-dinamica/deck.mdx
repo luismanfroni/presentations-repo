@@ -1,3 +1,8 @@
+import {
+  CodeSurfer,
+  CodeSurferColumns,
+  Step,
+} from "code-surfer";
 import { vsDark } from "@code-surfer/themes";
 
 export const theme = vsDark;
@@ -24,3 +29,193 @@ A idéia é simplesmente guardar resultados de subproblemas, para nós não prec
 </div>
 
 
+---
+
+# Tabulação x Memoização
+
+<div style={{ padding: '48px' }}>
+  Existem dois modos de guardar resultados:
+
+  Tabulação: de baixo para cima
+
+  Memoização: de cima para baixo
+</div>
+
+---
+
+<CodeSurferColumns>
+
+<Step title="Exemplo Tabulação">
+
+```py
+def fibonacci(n):
+  if n == 0:
+    return 0
+  if n == 1:
+    return 1
+  return fibonacci(n - 1) + fibonacci(n - 2)
+```
+
+Aqui temos uma função recursiva de fibonacci, onde tem espaço para otimizações. Iremos aplicar o método de tabulação.
+
+</Step>
+
+<Step title="Exemplo Tabulação">
+
+```py
+def fibonacci(n):
+  cache = [0, 1]
+
+  return fibonacci(n - 1) + fibonacci(n - 2)
+```
+
+Primeiro vamos criar uma lista de cache com os dois primeiros valores.
+
+</Step>
+
+<Step title="Exemplo Tabulação">
+
+```py
+def fibonacci(n):
+  cache = [0, 1]
+
+  for i in range(2, n + 1):
+    cache[i] = cache[i - 1] +  cache[i - 2]
+
+  return fibonacci(n - 1) + fibonacci(n - 2)
+```
+
+Guardamos valores de fibonacci no cache conforme o número passado por paramêtro.
+É aqui onde fica explícito que tabulação é de baixo para cima.
+
+</Step>
+
+<Step title="Exemplo Tabulação">
+
+```py
+def fibonacci(n):
+  cache = [0, 1]
+
+  for i in range(2, n + 1):
+    cache[i] = cache[i - 1] +  cache[i - 2]
+
+  return cache[n]
+```
+
+E por último, retornamos o número desejado do cache.
+
+</Step>
+
+<Step title="Exemplo Tabulação">
+
+```py
+def fibonacci(n):
+  cache = [0, 1]
+
+  for i in range(2, n + 1):
+    cache[i] = cache[i - 1] +  cache[i - 2]
+
+  return cache[n]
+```
+
+A função otimizada por tabulação está finalizada.
+
+</Step>
+
+</CodeSurferColumns>
+
+---
+
+<CodeSurferColumns>
+
+<Step title="Exemplo Memoização">
+
+```py
+def fibonacci(n):
+  if n == 0:
+    return 0
+  if n == 1:
+    return 1
+  return fibonacci(n - 1) + fibonacci(n - 2)
+```
+
+Aqui temos a mesma função recursiva de fibonacci de antes, iremos aplicar o modo de memoização nela.
+
+</Step>
+
+<Step title="Exemplo Memoização">
+
+```py
+cache = []
+def fibonacci(n):
+  if n == 0:
+    return 0
+  if n == 1:
+    return 1
+  return fibonacci(n - 1) + fibonacci(n - 2)
+```
+
+Primeiro vamos criar uma lista de cache que vai ser utilizada pela recursão.
+
+</Step>
+
+<Step title="Exemplo Memoização">
+
+```py
+cache = []
+def fibonacci(n):
+  if n == 0:
+    return 0
+  if n == 1:
+    return 1
+  if (len(cache) - 1) >= n:
+    return cache[n]
+
+  return fibonacci(n - 1) + fibonacci(n - 2)
+```
+
+Aqui retornamos o valor se ele existir no cache.
+
+</Step>
+
+<Step title="Exemplo Memoização">
+
+```py
+cache = []
+def fibonacci(n):
+  if n == 0:
+    return 0
+  if n == 1:
+    return 1
+  if (len(cache) - 1) >= n:
+    return cache[n]
+
+  cache[n] = fibonacci(n - 1) + fibonacci(n - 2)
+  return cache[n]
+```
+
+Finalizamos com executando a recursividade e colocando-a no cache e depois retornando ela.
+
+</Step>
+
+<Step title="Exemplo Memoização">
+
+```py
+cache = []
+def fibonacci(n):
+  if n == 0:
+    return 0
+  if n == 1:
+    return 1
+  if (len(cache) - 1) >= n:
+    return cache[n]
+
+  cache[n] = fibonacci(n - 1) + fibonacci(n - 2)
+  return cache[n]
+```
+
+Assim a função está otimizada com memoização.
+
+</Step>
+
+</CodeSurferColumns>
